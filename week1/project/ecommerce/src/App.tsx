@@ -5,8 +5,8 @@ import Products from './products';
 import ProductsData from './fake-data/products';
 import React from 'react';
 
-const App = () => {
-  const [categoryValue, setCategoryValue] = React.useState('');
+const App: React.FC = () => {
+  const [categoryValue, setCategoryValue] = React.useState<string>('');
 
   return (
     <>
@@ -15,7 +15,7 @@ const App = () => {
         <Categories
           categories={CategoriesData}
           showCategory={categoryValue}
-          onClickCategory={(i) => setCategoryValue(i)}
+          onClickCategory={(i: string) => setCategoryValue(i)}
         />
         <ul className="products">
           {ProductsData.map((product) => {

@@ -1,7 +1,17 @@
 import React from 'react';
 import './App.css';
 
-const Categories = ({ categories, showCategory, onClickCategory }) => {
+type CategoriesType = {
+  categories: string[];
+  showCategory: string;
+  onClickCategory: (i: string) => void;
+};
+
+const Categories: React.FC<CategoriesType> = ({
+  categories,
+  showCategory,
+  onClickCategory,
+}) => {
   return (
     <div className="categories">
       <ul className="categories-list">

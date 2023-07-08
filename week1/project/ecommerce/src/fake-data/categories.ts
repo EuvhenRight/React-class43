@@ -1,4 +1,4 @@
-const CategoriesData = [
+const CategoriesData: string[] = [
   'FAKE: electronics',
   'FAKE: jewelery',
   "FAKE: men's clothing",

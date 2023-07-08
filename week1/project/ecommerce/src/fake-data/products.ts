@@ -1,4 +1,17 @@
-const ProductsData = [
+type Product = {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+};
+
+const ProductsData: Product[] = [
   {
     id: 1,
     title: 'FAKE: Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
