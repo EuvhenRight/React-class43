@@ -1,30 +1,31 @@
 import React from 'react';
-import './App.css';
+import { NavLink } from 'react-router-dom';
+import style from './header.module.css';
 
 type CategoriesType = {
-  categories: string[];
+  categoriesArray: string[];
   showCategory: string;
   onClickCategory: (i: string) => void;
 };
 
 const Categories: React.FC<CategoriesType> = ({
-  categories,
+  categoriesArray,
   showCategory,
   onClickCategory,
 }) => {
   return (
-    <div className="categories">
-      <ul className="categories-list">
-        {categories.map((value, i) => {
+    <div className={style.categories}>
+      <ul className={style.categoriesList}>
+        {categoriesArray.map((value, i) => {
           return (
             <li
               key={i}
               onClick={() => onClickCategory(value)}
-              className={`category-item ${
-                showCategory === value ? 'active' : ''
+              className={`${style.categoryItem} ${
+                showCategory === value ? style.active : ''
               }`}
             >
-              {value}
+              <NavLink to={`/category/${value}`}>{value}</NavLink>
             </li>
           );
         })}
