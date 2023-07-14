@@ -1,25 +1,17 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-
-import style from './App.module.css';
-import ProductsPage from './components/productsPage';
-import Header from './components/header';
+import MainPage from './components/mainPage';
+import NotFound from './components/notFound';
+import ProductView from './components/product';
 
 const App: React.FC = () => {
-  const [categoryValue, setCategoryValue] = React.useState<string>('');
   return (
-    <div className={style.App}>
-      <Header
-        categoryValue={categoryValue}
-        onClickCategory={(i: string) => setCategoryValue(i)}
-      />
-      <Routes>
-        <Route
-          path="/category/:category"
-          element={<ProductsPage categoryValue={categoryValue} />}
-        />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path=":category/products/" element={<MainPage />} />
+      <Route path=":category/products/:product/:id" element={<ProductView />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 

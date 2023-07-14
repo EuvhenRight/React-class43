@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Categories from '../components/categories';
+import style from './header.module.css';
 
 type CategoriesPageProps = {
   categoryValue: string;
@@ -30,7 +32,9 @@ const Header: React.FC<CategoriesPageProps> = ({
   }, []);
   return (
     <>
-      <h1>Products</h1>
+      <Link className={style.headerLink} to={'/'}>
+        <h1>Products</h1>
+      </Link>
       <Categories
         categoriesArray={categories}
         showCategory={categoryValue}

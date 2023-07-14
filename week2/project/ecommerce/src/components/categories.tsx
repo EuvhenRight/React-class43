@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import style from './header.module.css';
 
 type CategoriesType = {
@@ -14,23 +14,27 @@ const Categories: React.FC<CategoriesType> = ({
   onClickCategory,
 }) => {
   return (
-    <div className={style.categories}>
-      <ul className={style.categoriesList}>
-        {categoriesArray.map((value, i) => {
-          return (
-            <li
-              key={i}
-              onClick={() => onClickCategory(value)}
-              className={`${style.categoryItem} ${
-                showCategory === value ? style.active : ''
-              }`}
-            >
-              <NavLink to={`/category/${value}`}>{value}</NavLink>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <>
+      <div className={style.categories}>
+        <ul className={style.categoriesList}>
+          {categoriesArray.map((value, i) => {
+            return (
+              <li
+                key={i}
+                onClick={() => onClickCategory(value)}
+                className={`${style.categoryItem} ${
+                  showCategory === value ? style.active : ''
+                }`}
+              >
+                <Link to={`/${value}/products`} className={style.link}>
+                  {value}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </>
   );
 };
 

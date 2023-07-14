@@ -1,6 +1,6 @@
-import Products from './products';
 import React from 'react';
 import style from './productsPage.module.css';
+import { Link } from 'react-router-dom';
 
 type Product = {
   id: number;
@@ -27,9 +27,8 @@ const ProductsPage: React.FC<ProductsPageProps> = ({ categoryValue }) => {
     try {
       const url = category
         ? `https://fakestoreapi.com/products/category/${category}`
-        : 'https://fakestoreapi.com/products';
+        : `https://fakestoreapi.com/products`;
       const res = await fetch(url);
-      console.log(url);
       if (!res.ok) {
         throw new Error('Failed to fetch products.');
       }
@@ -44,6 +43,7 @@ const ProductsPage: React.FC<ProductsPageProps> = ({ categoryValue }) => {
   React.useEffect(() => {
     productsData(categoryValue);
   }, [categoryValue]);
+
   return (
     <>
       {error && <p className={style.error}>{error}</p>}
@@ -51,7 +51,17 @@ const ProductsPage: React.FC<ProductsPageProps> = ({ categoryValue }) => {
         {products.map((product) => {
           return (
             <li className={style.productItem} key={product.id}>
-              <Products product={product} />
+              <Link
+                className={style.product}
+                to={`/${product.category}/products/${product.title}/${product.id}`}
+              >
+                <img
+                  className={style.productImage}
+                  src={product.image}
+                  alt={product.title}
+                />
+                <span className={style.productTitle}>{product.title}</span>
+              </Link>
             </li>
           );
         })}
