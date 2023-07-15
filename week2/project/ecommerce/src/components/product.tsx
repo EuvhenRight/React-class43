@@ -19,10 +19,10 @@ interface ProductViewProps {}
 
 const ProductView: React.FC<ProductViewProps> = () => {
   const [product, setProduct] = React.useState<ProductType | null>(null);
-  const { id } = useParams<{ id: string }>();
+  const { category, id } = useParams<{ category: string; id: string }>();
   const navigate = useNavigate();
   const [error, setError] = React.useState<string>('');
-
+  console.log(category);
   const ProductViewFetch = async (id: string) => {
     try {
       const url = `https://fakestoreapi.com/products/${id}`;
@@ -50,18 +50,25 @@ const ProductView: React.FC<ProductViewProps> = () => {
 
   return (
     <>
-      <div className={style.product}>
+      <div className={style.productDetails}>
         {error && <p className={style.error}>{error}</p>}
-        <h1 className={style.productTitle}>{product.title}</h1>
-        <img
-          className={style.productImage}
-          src={product.image}
-          alt={product.title}
-        />
-        <span className={style.productTitle}>{product.description}</span>
+        <h1 className={style.productDetailsTitle}>{product.title}</h1>
+        <div className={style.productDetailsInfo}>
+          <div className={style.productDetailsImageContainer}>
+            <img
+              className={style.productDetailsImage}
+              src={product.image}
+              alt={product.title}
+            />
+          </div>
+          <p className={style.productDetailsDescription}>
+            {product.description}
+          </p>
+        </div>
         <button
+          className={style.productDetailsButton}
           onClick={() => {
-            navigate(`/${product.category}/products`);
+            navigate(`/${category}/products`);
           }}
         >
           back
