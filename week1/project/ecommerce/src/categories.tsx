@@ -3,15 +3,25 @@ import './App.css';
 
 type CategoriesType = {
   categories: string[];
-  showCategory: string;
-  onClickCategory: (i: string) => void;
+  categoryValue: string;
+  setCategoryValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const Categories: React.FC<CategoriesType> = ({
   categories,
-  showCategory,
-  onClickCategory,
+  categoryValue,
+  setCategoryValue,
 }) => {
+  const handleClickCategory = (clickedCategory: string) => {
+    if (categoryValue === clickedCategory) {
+      // Clicked on the already selected category, so remove the filter
+      setCategoryValue('');
+    } else {
+      // Clicked on a new category, set it as the filter value
+      setCategoryValue(clickedCategory);
+    }
+  };
+
   return (
     <div className="categories">
       <ul className="categories-list">
@@ -19,9 +29,9 @@ const Categories: React.FC<CategoriesType> = ({
           return (
             <li
               key={i}
-              onClick={() => onClickCategory(value)}
+              onClick={() => handleClickCategory(value)}
               className={`category-item ${
-                showCategory === value ? 'active' : ''
+                categoryValue === value ? 'active' : ''
               }`}
             >
               {value}

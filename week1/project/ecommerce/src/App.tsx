@@ -14,8 +14,8 @@ const App: React.FC = () => {
         <h1>Products</h1>
         <Categories
           categories={CategoriesData}
-          showCategory={categoryValue}
-          onClickCategory={(i: string) => setCategoryValue(i)}
+          categoryValue={categoryValue}
+          setCategoryValue={setCategoryValue}
         />
         <ul className="products">
           {ProductsData.map((product) => {
