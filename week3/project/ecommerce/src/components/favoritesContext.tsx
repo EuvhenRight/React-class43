@@ -10,6 +10,9 @@ type ChangesContextType = {
   setProducts: React.Dispatch<React.SetStateAction<ProductType[]>>;
   error: string;
   setError: React.Dispatch<React.SetStateAction<string>>;
+  isLoading: boolean;
+  newArray: boolean;
+  setNewArray: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const ChangesContext = React.createContext<ChangesContextType>({
@@ -21,6 +24,9 @@ export const ChangesContext = React.createContext<ChangesContextType>({
   setProducts: () => {},
   error: '',
   setError: () => {},
+  isLoading: true,
+  newArray: false,
+  setNewArray: () => {},
 });
 
 interface Props {
@@ -32,6 +38,9 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
   const [favorites, setFavorites] = React.useState<boolean>(true);
   const [products, setProducts] = React.useState<ProductType[]>([]);
   const [error, setError] = React.useState<string>('');
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [newArray, setNewArray] = React.useState<boolean>(false);
+
   const productsData = async (category: string) => {
     try {
       const url = category
@@ -50,14 +59,17 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
       });
 
       setProducts(products);
+      setIsLoading(false);
       setError('');
-    } catch (err) {
+    } catch (err) {   
+      setIsLoading(false);   
       setError('Check your internet connection');
     }
   };
 
   React.useEffect(() => {
     productsData(categoryValue);
+    setIsLoading(true)
   }, [categoryValue]);
   return (
     <ChangesContext.Provider
@@ -70,6 +82,9 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
         setProducts,
         error,
         setError,
+        isLoading,
+        newArray,
+        setNewArray
       }}
     >
       {children}

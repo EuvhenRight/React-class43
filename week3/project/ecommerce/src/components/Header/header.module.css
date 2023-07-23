@@ -15,4 +15,15 @@ h1 {
 li {
   margin: 5px;
   text-decoration: none;
+  list-style-type: none;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.right_menu {
+  display: flex;
+  justify-content: right;
 }

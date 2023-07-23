@@ -4,6 +4,7 @@ import ProductsPage from '../ProductsPage/productsPage';
 import Header from '../Header/header';
 
 const MainPage: React.FC = () => {
+ 
   return (
     <>
       <div className={style.App}>
