@@ -1,0 +1,18 @@
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+.headerLink {
+  text-decoration: none;
+}
+
+.links {
+  display: flex;
+  list-style-type: none;
+  font-size: 20px;
+}
+
+li {
+  margin: 5px;
+  text-decoration: none;
+}
