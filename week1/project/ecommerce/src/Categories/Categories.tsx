@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 
-type CategoriesType = {
+type CategoriesProps = {
   categories: string[];
   categoryValue: string;
   setCategoryValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Categories: React.FC<CategoriesType> = ({
+const Categories: React.FC<CategoriesProps> = ({
   categories,
   categoryValue,
   setCategoryValue,
