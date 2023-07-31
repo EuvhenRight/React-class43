@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  margin: 8px;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin-block-end: 0;
+  margin-block-start: 0;
+  padding-inline-start: 0;
+}
+
+.item {
+  margin: 8px;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .item {
+    width: calc(50% - 16px);
+  }
+}
+
+@media (min-width: 1000px) {
+  .item {
+    width: calc(33% - 16px);
+  }
+}

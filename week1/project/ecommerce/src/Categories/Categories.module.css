@@ -1,0 +1,19 @@
+.list {
+  display: flex;
+  list-style-type: none;
+}
+
+.item {
+  background-color: #efeff0;
+  cursor: pointer;
+  font-weight: 700;
+  margin: 2px;
+  padding: 12px;
+}
+
+.item:hover {
+  background-color: #d6d6d8;
+}
+.active {
+  background-color: #bdbdc1;
+}

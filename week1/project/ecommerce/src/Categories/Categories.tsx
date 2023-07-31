@@ -1,13 +1,13 @@
 import React from 'react';
-import './App.css';
+import styles from './Categories.module.css';
 
-type CategoriesType = {
+type Categories = {
   categories: string[];
   categoryValue: string;
   setCategoryValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Categories: React.FC<CategoriesType> = ({
+const Categories: React.FC<Categories> = ({
   categories,
   categoryValue,
   setCategoryValue,
@@ -24,13 +24,13 @@ const Categories: React.FC<CategoriesType> = ({
 
   return (
     <div className="categories">
-      <ul className="categories-list">
+      <ul className={styles.list}>
         {categories.map((value, i) => {
           return (
             <li
               key={i}
               onClick={() => handleClickCategory(value)}
-              className={`category-item ${
+              className={styles.item`${
                 categoryValue === value ? 'active' : ''
               }`}
             >
