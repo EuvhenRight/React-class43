@@ -23,15 +23,15 @@ const Categories: React.FC<Categories> = ({
   };
 
   return (
-    <div className="categories">
+    <div className={styles.categories}>
       <ul className={styles.list}>
         {categories.map((value, i) => {
           return (
             <li
               key={i}
               onClick={() => handleClickCategory(value)}
-              className={styles.item`${
-                categoryValue === value ? 'active' : ''
+              className={`${styles.item} ${
+                categoryValue === value ? styles.active : ''
               }`}
             >
               {value}
