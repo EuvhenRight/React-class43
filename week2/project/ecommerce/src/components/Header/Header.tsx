@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Categories from '../components/categories';
-import style from './header.module.css';
+import Categories from '../Categories/Categories';
+import style from './Header.module.css';
 
 type CategoriesPageProps = {
   categoryValue: string;
-  onClickCategory: (category: string) => void;
+  setCategoryValue: (category: string) => void;
 };
 
 const Header: React.FC<CategoriesPageProps> = ({
   categoryValue,
-  onClickCategory,
+  setCategoryValue,
 }) => {
   // const [categoryValue, setCategoryValue] = React.useState<string>('');
   const [categories, setCategories] = React.useState<string[]>([]); // ?
@@ -36,10 +36,10 @@ const Header: React.FC<CategoriesPageProps> = ({
         <h1>Products</h1>
       </Link>
       <Categories
-        categoriesArray={categories}
-        showCategory={categoryValue}
-        onClickCategory={(i: string) => {
-          onClickCategory(i);
+        categories={categories}
+        categoryValue={categoryValue}
+        setCategoryValue={(i: string) => {
+          setCategoryValue(i);
         }}
       />
     </>

@@ -1,16 +1,9 @@
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-.headerLink {
-  text-decoration: none;
-}
-.categoriesList {
+.list {
   display: flex;
   list-style-type: none;
 }
 
-.categoryItem {
+.item {
   background-color: #efeff0;
   cursor: pointer;
   font-weight: 700;
@@ -18,7 +11,7 @@ h1 {
   padding: 12px;
 }
 
-.categoryItem:hover {
+.item:hover {
   background-color: #d6d6d8;
 }
 .active {

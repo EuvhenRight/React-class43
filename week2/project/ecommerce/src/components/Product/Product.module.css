@@ -1,0 +1,29 @@
+.productDetailsImage {
+  margin-bottom: auto;
+  margin-top: auto;
+  max-height: 300px;
+  object-fit: contain;
+  width: 100%;
+}
+
+.productDetailsTitle {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.productDetailsInfo {
+  align-items: center;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.productDetailsImageContainer {
+  min-width: 50%;
+}
+
+.productDetailsButton {
+  padding: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

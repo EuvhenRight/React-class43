@@ -1,8 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import MainPage from './components/mainPage';
-import NotFound from './components/notFound';
-import ProductView from './components/product';
+import MainPage from './components/MainPage/MainPage';
+import NotFound from './components/Not_found/NotFound';
+import ProductView from './components/Product/Product';
 
 const App: React.FC = () => {
   return (

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import style from './mainPage.module.css';
-import ProductsPage from './productsPage';
-import Header from './header';
+import style from './MainPage.module.css';
+import ProductsPage from '../Products_Page/Products_Page';
+import Header from '../Header/Header';
 
 const MainPage: React.FC = () => {
   const [categoryValue, setCategoryValue] = React.useState<string>('');
@@ -11,7 +11,7 @@ const MainPage: React.FC = () => {
       <div className={style.App}>
         <Header
           categoryValue={categoryValue}
-          onClickCategory={(i: string) => setCategoryValue(i)}
+          setCategoryValue={(i: string) => setCategoryValue(i)}
         />
         <ProductsPage categoryValue={categoryValue} />
       </div>

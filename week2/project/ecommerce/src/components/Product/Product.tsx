@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import style from './productsPage.module.css';
+import style from './Product.module.css';
 
-type ProductType = {
+type Product = {
   id: number;
   title: string;
   price: number;
@@ -18,7 +18,7 @@ type ProductType = {
 interface ProductViewProps {}
 
 const ProductView: React.FC<ProductViewProps> = () => {
-  const [product, setProduct] = React.useState<ProductType | null>(null);
+  const [product, setProduct] = React.useState<Product | null>(null);
   const { category, id } = useParams<{ category: string; id: string }>();
   const navigate = useNavigate();
   const [error, setError] = React.useState<string>('');
