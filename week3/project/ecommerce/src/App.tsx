@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { ContextProvider } from './components/ProductsContext';
 
 import Favorites from './components/Favorites/Favorites';
-import MainPage from './components/MainPage/MainPage';
+import MainPage from '../src/components/Main_Page/Main_Page';
 import NotFound from './components/NotFound/NotFound';
 import WelcomePage from './components/WelcomePage/WelcomePage';
 import ProductDetails from './components/Product_Details/Product_Details';
