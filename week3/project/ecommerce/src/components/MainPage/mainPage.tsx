@@ -1,6 +1,6 @@
 import React from 'react';
 import style from '../MainPage/MainPage.module.css';
-import ProductsPage from '../ProductsPage/ProductsPage';
+import ProductsPage from '../Products_List/Products_List';
 import Header from '../Header/Header';
 
 const MainPage: React.FC = () => {

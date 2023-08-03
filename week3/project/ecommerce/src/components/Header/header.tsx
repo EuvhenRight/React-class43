@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Categories from '../Categories/Categories';
-import { ChangesContext } from '../FavoritesContext';
+import FavoritesComponent from '../Favorites/Favorite.Component';
+import { ChangesContext } from '../ProductsContext';
 import style from './Header.module.css';
 
 const Header: React.FC = () => {
   const [categories, setCategories] = React.useState<string[]>([]);
-  const { newArray, setNewArray } = React.useContext(ChangesContext);
+  const { error } = React.useContext(ChangesContext);
   const categoriesData = async () => {
     try {
       const res = await fetch('https://fakestoreapi.com/products/categories');
@@ -19,10 +19,6 @@ const Header: React.FC = () => {
     }
   };
 
-  const handleChangeFavorites = () => {
-    setNewArray(!newArray);
-  };
-
   React.useEffect(() => {
     categoriesData();
   }, []);
@@ -30,18 +26,7 @@ const Header: React.FC = () => {
     <>
       <div className={style.top}>
         <h1>Products</h1>
-        <ul className={style.right_menu}>
-          <Link to={'/category/products'} className={style.link}>
-            <li>Products</li>
-          </Link>
-          <Link
-            onClick={handleChangeFavorites}
-            className={style.link}
-            to={'/favorites'}
-          >
-            <li>Favorites</li>
-          </Link>
-        </ul>
+        <FavoritesComponent />
       </div>
       <Categories categoriesArray={categories} />
     </>

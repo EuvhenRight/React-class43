@@ -1,44 +1,30 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChangesContext } from '../FavoritesContext';
-import { Product } from '../Product/Product';
-import ProductsInArray from '../ProductsInArray/ProductsInArray';
+import { useData, useProduct } from '../ProductsContext';
+import { Product } from '../Types/Types';
+import ProductsInArray from '../Products_Item/Products_Item';
+import FavoritesComponent from './Favorite.Component';
 import style from './Favorites.module.css';
 
 const Favorites: React.FC = () => {
-  const { newArray, setNewArray } = React.useContext(ChangesContext);
-  const { product: productData, setProduct } = useContext(ChangesContext);
-  const [myFavorites, setMyFavorites] = React.useState<Product[]>([]);
+  const { worksProduct: productData } = useProduct();
+  // make a full data of products
+  const { allDataProducts } = useData();
 
-  const handleButton = () => {
-    setNewArray(!newArray);
-  };
-
-  React.useEffect(() => {
-    const updatedFavorites = productData.products.filter((product) =>
-      productData.favor.includes(product.id)
-    );
-    setMyFavorites(updatedFavorites);
-  }, [productData]);
-
-  console.log(myFavorites, 'myFavorites');
+  // find the product from allDataProducts
+  const findProduct: Product[] = allDataProducts.filter((product) =>
+    productData.favorite.includes(product.id)
+  );
 
   return (
     <div>
       <div className={style.header_favorites}>
         <h1>Favorites</h1>
-        <ul className={style.right_menu}>
-          <Link to={'/category/products'} className={style.link}>
-            <li>Products</li>
-          </Link>
-          <Link onClick={handleButton} className={style.link} to={'/favorites'}>
-            <li>Favorites</li>
-          </Link>
-        </ul>
+        <FavoritesComponent />
       </div>
-      {myFavorites.length ? (
+      {findProduct.length ? (
         <ul className={style.products}>
-          {myFavorites.map((product) => {
+          {findProduct.map((product) => {
             return (
               <li className={style.productItem} key={product.id}>
                 <Link

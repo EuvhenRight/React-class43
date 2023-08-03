@@ -103,3 +103,8 @@
     width: calc(33% - 16px);
   }
 }
+
+.header_favorites {
+  display: flex;
+  justify-content: space-between;
+}

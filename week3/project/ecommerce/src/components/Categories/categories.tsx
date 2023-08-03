@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ChangesContext } from '../ProductsContext';
+
 import style from './Categories.module.css';
-import { ChangesContext } from '../FavoritesContext';
 
 type Categories = {
   categoriesArray: string[];

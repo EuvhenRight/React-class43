@@ -1,39 +1,10 @@
-import React, { useReducer } from 'react';
-import { Product } from './Product/Product';
-
-type ProductData = {
-  products: Product[];
-  favor: number[];
-};
-
-type ProductAction =
-  | {
-      type: 'PRODUCTS';
-      products: Product[];
-    }
-  | {
-      type: 'FAVORITES';
-      favor: number;
-    };
-
-type ProductReducer = (
-  state: ProductData,
-  action: ProductAction
-) => ProductData;
-
-type ChangesContext = {
-  categoryValue: string;
-  setCategoryValue: React.Dispatch<React.SetStateAction<string>>;
-  product: ProductData;
-  setProduct: (action: ProductAction) => void;
-  error: string;
-  setError: React.Dispatch<React.SetStateAction<string>>;
-  isLoading: boolean;
-  newArray: boolean;
-  setNewArray: React.Dispatch<React.SetStateAction<boolean>>;
-  myFavorites: Product[];
-  setMyFavorites: React.Dispatch<React.SetStateAction<Product[]>>;
-};
+import React, { useContext, useReducer } from 'react';
+import {
+  ChangesContextType,
+  ProductData,
+  ProductReducer,
+  Product,
+} from './Types/Types';
 
 const productReducer: ProductReducer = (state, action) => {
   switch (action.type) {
@@ -41,15 +12,15 @@ const productReducer: ProductReducer = (state, action) => {
       return { ...state, products: action.products };
 
     case 'FAVORITES':
-      let favor = state.favor;
+      let favorite = state.favorite;
 
-      if (state.favor.includes(action.favor)) {
-        favor = state.favor.filter((item) => item !== action.favor);
+      if (state.favorite.includes(action.favorite)) {
+        favorite = state.favorite.filter((item) => item !== action.favorite);
       } else {
-        favor = [...state.favor, action.favor];
+        favorite = [...state.favorite, action.favorite];
       }
 
-      return { ...state, favor };
+      return { ...state, favorite };
 
     default:
       return state;
@@ -58,21 +29,21 @@ const productReducer: ProductReducer = (state, action) => {
 
 const defaultValues: ProductData = {
   products: [],
-  favor: [],
+  favorite: [],
 };
 
-export const ChangesContext = React.createContext<ChangesContext>({
+export const ChangesContext = React.createContext<ChangesContextType>({
   categoryValue: '',
   setCategoryValue: () => {},
-  product: defaultValues,
-  setProduct: () => {},
+  worksProduct: defaultValues,
+  setWorksProduct: () => {},
   error: '',
   setError: () => {},
   isLoading: true,
   newArray: false,
   setNewArray: () => {},
-  myFavorites: [],
-  setMyFavorites: () => {},
+  allDataProducts: [],
+  setAllDataProducts: () => {},
 });
 
 interface Props {
@@ -81,14 +52,29 @@ interface Props {
 
 export const ContextProvider: React.FC<Props> = ({ children }) => {
   const [categoryValue, setCategoryValue] = React.useState<string>('');
-  const [product, setProduct] = useReducer(productReducer, {
+  const [worksProduct, setWorksProduct] = useReducer(productReducer, {
     products: [],
-    favor: [],
+    favorite: [],
   } as ProductData); // Use the ProductData type here
   const [error, setError] = React.useState<string>('');
-  const [myFavorites, setMyFavorites] = React.useState<Product[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [newArray, setNewArray] = React.useState<boolean>(false);
+  const [allDataProducts, setAllDataProducts] = React.useState<Product[]>([]);
+
+  const fetchAllDataProducts = async () => {
+    try {
+      const url = 'https://fakestoreapi.com/products';
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error('Failed to fetch products.');
+      }
+      const products = await res.json();
+      setAllDataProducts(products);
+    } catch (err) {
+      setIsLoading(false);
+      setError('Check your internet connection');
+    }
+  };
 
   const productsData = async (category: string) => {
     try {
@@ -99,10 +85,9 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
       if (!res.ok) {
         throw new Error('Failed to fetch products.');
       }
-      let products;
-      products = await res.json();
+      const products = await res.json();
 
-      setProduct({ type: 'PRODUCTS', products }); // Use action object
+      setWorksProduct({ type: 'PRODUCTS', products }); // Use action object
       setIsLoading(false);
       setError('');
     } catch (err) {
@@ -112,26 +97,33 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
   };
 
   React.useEffect(() => {
+    fetchAllDataProducts();
     productsData(categoryValue);
     setIsLoading(true);
   }, [categoryValue]);
+
   return (
     <ChangesContext.Provider
       value={{
         categoryValue,
         setCategoryValue,
-        product,
-        setProduct,
+        worksProduct,
+        setWorksProduct,
         error,
         setError,
         isLoading,
         newArray,
         setNewArray,
-        myFavorites,
-        setMyFavorites,
+        allDataProducts,
+        setAllDataProducts,
       }}
     >
       {children}
     </ChangesContext.Provider>
   );
 };
+
+export const useError = () => useContext(ChangesContext);
+export const useProduct = () => useContext(ChangesContext);
+export const useLoadingInfo = () => useContext(ChangesContext);
+export const useData = () => useContext(ChangesContext);

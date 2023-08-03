@@ -1,12 +1,12 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { ContextProvider } from './components/FavoritesContext';
+import { ContextProvider } from './components/ProductsContext';
+
 import Favorites from './components/Favorites/Favorites';
 import MainPage from './components/MainPage/MainPage';
 import NotFound from './components/NotFound/NotFound';
-import ProductView from './components/Product/Product';
-
 import WelcomePage from './components/WelcomePage/WelcomePage';
+import ProductDetails from './components/Product_Details/Product_Details';
 
 const App: React.FC = () => {
   return (
@@ -17,7 +17,7 @@ const App: React.FC = () => {
         <Route path="/favorites" element={<Favorites />} />
         <Route
           path=":category/products/:product/:id"
-          element={<ProductView />}
+          element={<ProductDetails />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

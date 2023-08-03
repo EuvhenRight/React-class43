@@ -1,31 +1,26 @@
 import React, { useContext } from 'react';
-import { ChangesContext } from '../FavoritesContext';
-import { Product } from '../Product/Product';
-import style from './ProductsInArray.module.css';
+import { ChangesContext, useError } from '../ProductsContext';
+import { Product } from '../Types/Types';
+import style from './Products_Item.module.css';
 
 interface ProductInArrayProps {
   product: Product;
 }
 
-const ProductsInArray: React.FC<ProductInArrayProps> = ({ product }) => {
-  const { product: productData, setProduct } = useContext(ChangesContext);
-  const [myFavorites, setMyFavorites] = React.useState<Product[]>([]);
+const ProductsItem: React.FC<ProductInArrayProps> = ({ product }) => {
+  const { worksProduct: productData, setWorksProduct } =
+    useContext(ChangesContext);
+  const { error } = useError();
 
   const handleChangeFavorites = (productId: number) => {
-    setProduct({ type: 'FAVORITES', favor: productId });
+    setWorksProduct({ type: 'FAVORITES', favorite: productId });
   };
 
-  React.useEffect(() => {
-    const updatedFavorites = productData.products.filter((product) =>
-      productData.favor.includes(product.id)
-    );
-    setMyFavorites(updatedFavorites);
-  }, [productData]);
-
-  const isFavorite = productData.favor.includes(product.id);
+  const isFavorite = productData.favorite.includes(product.id);
 
   return (
     <>
+      {error && <p className={style.error}>{error}</p>}
       <div className={style.productImageContainer}>
         <img
           className={style.productImage}
@@ -59,4 +54,4 @@ const ProductsInArray: React.FC<ProductInArrayProps> = ({ product }) => {
   );
 };
 
-export default ProductsInArray;
+export default ProductsItem;
