@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './NotFound.module.css';
+import style from './Not_Found.module.css';
 
 const NotFound: React.FC = () => {
   return <div className={style.main}>Page is not found</div>;
