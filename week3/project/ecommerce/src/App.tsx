@@ -4,7 +4,7 @@ import { ContextProvider } from './components/ProductsContext';
 
 import Favorites from './components/Favorites/Favorites';
 import MainPage from '../src/components/Main_Page/Main_Page';
-import NotFound from '../src/components/NotFound/NotFound';
+import NotFound from './components/Not_Found/Not_Found';
 import WelcomePage from './components/WelcomePage/WelcomePage';
 import ProductDetails from './components/Product_Details/Product_Details';
 
