@@ -1,13 +1,13 @@
 import React from 'react';
 import Categories from '../Categories/Categories';
 import FavoritesComponent from '../Favorites/Favorite.Component';
-import { ChangesContext } from '../ProductsContext';
+import { useError } from '../ProductsContext';
 import style from './Header.module.css';
 
 const Header: React.FC = () => {
   const [categories, setCategories] = React.useState<string[]>([]);
-  const { error } = React.useContext(ChangesContext);
-  const categoriesData = async () => {
+  const { error, setError } = useError();
+  const categoriesData = React.useCallback(async () => {
     try {
       const res = await fetch('https://fakestoreapi.com/products/categories');
 
@@ -15,15 +15,16 @@ const Header: React.FC = () => {
 
       setCategories(data);
     } catch (err) {
-      console.log('Check your internet connection', err);
+      setError('Check your internet connection');
     }
-  };
+  }, [setError]);
 
   React.useEffect(() => {
     categoriesData();
-  }, []);
+  }, [categoriesData]);
   return (
     <>
+      {error && <p className={style.error}>{error}</p>}
       <div className={style.top}>
         <h1>Products</h1>
         <FavoritesComponent />
