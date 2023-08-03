@@ -1,16 +1,29 @@
-import React from 'react';
-import { ProductType } from '../Product/product';
-import style from './productsInArray.module.css';
+import React, { useContext } from 'react';
+import { ChangesContext } from '../FavoritesContext';
+import { Product } from '../Product/Product';
+import style from './ProductsInArray.module.css';
 
 interface ProductInArrayProps {
-  product: ProductType;
-  handleChangeFavorites: (productId: number) => void;
+  product: Product;
 }
 
-const ProductsInArray: React.FC<ProductInArrayProps> = ({
-  product,
-  handleChangeFavorites,
-}) => {
+const ProductsInArray: React.FC<ProductInArrayProps> = ({ product }) => {
+  const { product: productData, setProduct } = useContext(ChangesContext);
+  const [myFavorites, setMyFavorites] = React.useState<Product[]>([]);
+
+  const handleChangeFavorites = (productId: number) => {
+    setProduct({ type: 'FAVORITES', favor: productId });
+  };
+
+  React.useEffect(() => {
+    const updatedFavorites = productData.products.filter((product) =>
+      productData.favor.includes(product.id)
+    );
+    setMyFavorites(updatedFavorites);
+  }, [productData]);
+
+  const isFavorite = productData.favor.includes(product.id);
+
   return (
     <>
       <div className={style.productImageContainer}>
@@ -26,7 +39,7 @@ const ProductsInArray: React.FC<ProductInArrayProps> = ({
             handleChangeFavorites(product.id);
           }}
         >
-          {product.favorite ? (
+          {!isFavorite ? (
             <img
               className={style.favoriteImage}
               src="../assets/heart-regular.svg"

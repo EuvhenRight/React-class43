@@ -27,3 +27,9 @@ li {
   display: flex;
   justify-content: right;
 }
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

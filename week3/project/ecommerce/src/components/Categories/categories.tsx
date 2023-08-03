@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import style from './categories.module.css';
-import { ChangesContext } from '../favoritesContext';
+import style from './Categories.module.css';
+import { ChangesContext } from '../FavoritesContext';
 
-type CategoriesType = {
+type Categories = {
   categoriesArray: string[];
 };
 
-const Categories: React.FC<CategoriesType> = ({ categoriesArray }) => {
+const Categories: React.FC<Categories> = ({ categoriesArray }) => {
   const { categoryValue, setCategoryValue } = React.useContext(ChangesContext);
 
   const handleClickCategory = (clickedCategory: string) => {

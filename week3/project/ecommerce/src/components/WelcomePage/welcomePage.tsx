@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import style from './welcomePage.module.css';
+import style from './WelcomePage.module.css';
 
 const WelcomePage: React.FC = () => {
   return (

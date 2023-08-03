@@ -1,32 +1,78 @@
-import React from 'react';
-import { ProductType } from './Product/product';
+import React, { useReducer } from 'react';
+import { Product } from './Product/Product';
 
-type ChangesContextType = {
+type ProductData = {
+  products: Product[];
+  favor: number[];
+};
+
+type ProductAction =
+  | {
+      type: 'PRODUCTS';
+      products: Product[];
+    }
+  | {
+      type: 'FAVORITES';
+      favor: number;
+    };
+
+type ProductReducer = (
+  state: ProductData,
+  action: ProductAction
+) => ProductData;
+
+type ChangesContext = {
   categoryValue: string;
   setCategoryValue: React.Dispatch<React.SetStateAction<string>>;
-  favorites: boolean; // Add the favorites property
-  setFavorites: React.Dispatch<React.SetStateAction<boolean>>; // Add the setFavorites property
-  products: ProductType[];
-  setProducts: React.Dispatch<React.SetStateAction<ProductType[]>>;
+  product: ProductData;
+  setProduct: (action: ProductAction) => void;
   error: string;
   setError: React.Dispatch<React.SetStateAction<string>>;
   isLoading: boolean;
   newArray: boolean;
   setNewArray: React.Dispatch<React.SetStateAction<boolean>>;
+  myFavorites: Product[];
+  setMyFavorites: React.Dispatch<React.SetStateAction<Product[]>>;
 };
 
-export const ChangesContext = React.createContext<ChangesContextType>({
+const productReducer: ProductReducer = (state, action) => {
+  switch (action.type) {
+    case 'PRODUCTS':
+      return { ...state, products: action.products };
+
+    case 'FAVORITES':
+      let favor = state.favor;
+
+      if (state.favor.includes(action.favor)) {
+        favor = state.favor.filter((item) => item !== action.favor);
+      } else {
+        favor = [...state.favor, action.favor];
+      }
+
+      return { ...state, favor };
+
+    default:
+      return state;
+  }
+};
+
+const defaultValues: ProductData = {
+  products: [],
+  favor: [],
+};
+
+export const ChangesContext = React.createContext<ChangesContext>({
   categoryValue: '',
   setCategoryValue: () => {},
-  favorites: true,
-  setFavorites: () => {},
-  products: [],
-  setProducts: () => {},
+  product: defaultValues,
+  setProduct: () => {},
   error: '',
   setError: () => {},
   isLoading: true,
   newArray: false,
   setNewArray: () => {},
+  myFavorites: [],
+  setMyFavorites: () => {},
 });
 
 interface Props {
@@ -35,9 +81,12 @@ interface Props {
 
 export const ContextProvider: React.FC<Props> = ({ children }) => {
   const [categoryValue, setCategoryValue] = React.useState<string>('');
-  const [favorites, setFavorites] = React.useState<boolean>(true);
-  const [products, setProducts] = React.useState<ProductType[]>([]);
+  const [product, setProduct] = useReducer(productReducer, {
+    products: [],
+    favor: [],
+  } as ProductData); // Use the ProductData type here
   const [error, setError] = React.useState<string>('');
+  const [myFavorites, setMyFavorites] = React.useState<Product[]>([]);
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [newArray, setNewArray] = React.useState<boolean>(false);
 
@@ -53,38 +102,33 @@ export const ContextProvider: React.FC<Props> = ({ children }) => {
       let products;
       products = await res.json();
 
-      // Add new property into objects
-      products = products.map((product: ProductType) => {
-        return { ...product, favorite: favorites };
-      });
-
-      setProducts(products);
+      setProduct({ type: 'PRODUCTS', products }); // Use action object
       setIsLoading(false);
       setError('');
-    } catch (err) {   
-      setIsLoading(false);   
+    } catch (err) {
+      setIsLoading(false);
       setError('Check your internet connection');
     }
   };
 
   React.useEffect(() => {
     productsData(categoryValue);
-    setIsLoading(true)
+    setIsLoading(true);
   }, [categoryValue]);
   return (
     <ChangesContext.Provider
       value={{
         categoryValue,
         setCategoryValue,
-        favorites,
-        setFavorites,
-        products,
-        setProducts,
+        product,
+        setProduct,
         error,
         setError,
         isLoading,
         newArray,
-        setNewArray
+        setNewArray,
+        myFavorites,
+        setMyFavorites,
       }}
     >
       {children}
